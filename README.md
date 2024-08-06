@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ![SerpBear](https://i.imgur.com/0S2zIH3.png)
 
 # SerpBear
@@ -58,3 +59,6 @@ If you don't want to use proxies, you can use third party Scraping services to s
 
 - Next.js for Frontend & Backend.
 - Sqlite for Database.
+=======
+# serpbear_clone
+>>>>>>> d8469bb774915fa5ec4f8837572a6cbc67345a83
