@@ -76,7 +76,7 @@ const getKeywords = async (req: NextApiRequest, res: NextApiResponse<KeywordsGet
 const addKeywords = async (req: NextApiRequest, res: NextApiResponse<KeywordsGetResponse>) => {
    const { keywords } = req.body;
    if (keywords && Array.isArray(keywords) && keywords.length > 0) {
-      // const keywordsArray = keywords.replaceAll('\n', ',').split(',').map((item:string) => item.trim());
+      
       const keywordsToAdd: any = []; // QuickFIX for bug: https://github.com/sequelize/sequelize-typescript/issues/936
 
       keywords.forEach((kwrd: KeywordAddPayload) => {
@@ -129,19 +129,24 @@ const addKeywords = async (req: NextApiRequest, res: NextApiResponse<KeywordsGet
 };
 
 const deleteKeywords = async (req: NextApiRequest, res: NextApiResponse<KeywordsDeleteRes>) => {
-   if (!req.query.id && typeof req.query.id !== 'string') {
-      return res.status(400).json({ error: 'keyword ID is Required!' });
+   if (!req.query.id || typeof req.query.id !== 'string') {
+      return res.status(400).json({ error: 'Keyword ID is required!' });
    }
-   console.log('req.query.id: ', req.query.id);
+   
+   if (!req.query.domain || typeof req.query.domain !== 'string') {
+      return res.status(400).json({ error: 'Domain is required!' });
+   }
 
    try {
       const keywordsToRemove = (req.query.id as string).split(',').map((item) => parseInt(item, 10));
-      const removeQuery = { where: { ID: { [Op.in]: keywordsToRemove } } };
+      const domain = req.query.domain as string;
+      const removeQuery = { where: { id: { [Op.in]: keywordsToRemove }, domain } }; // Add 'domain' to the where clause
+
       const removedKeywordCount: number = await Keyword.destroy(removeQuery);
       return res.status(200).json({ keywordsRemoved: removedKeywordCount });
    } catch (error) {
-      console.log('[ERROR] Removing Keyword. ', error);
-      return res.status(400).json({ error: 'Could Not Remove Keyword!' });
+      console.log('[ERROR] Removing Keyword: ', error);
+      return res.status(400).json({ error: 'Could not remove keyword!' });
    }
 };
 
@@ -183,4 +188,4 @@ const updateKeywords = async (req: NextApiRequest, res: NextApiResponse<Keywords
       console.log('[ERROR] Updating Keyword. ', error);
       return res.status(200).json({ error: 'Error Updating keywords!' });
    }
-};
+}; 

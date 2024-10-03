@@ -18,7 +18,11 @@
       "isolatedModules": true,
       "jsx": "preserve",
       "incremental": true,
-      "experimentalDecorators": true
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "strictPropertyInitialization": false,
+      "allowSyntheticDefaultImports": true,
+      "typeRoots": ["./node_modules/@types"],
    },
    "include": [
       "next-env.d.ts",

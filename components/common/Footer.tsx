@@ -14,18 +14,34 @@ const Footer = ({ currentVersion = '' }: FooterProps) => {
 
    return (
       <footer className='text-center flex flex-1 justify-center pb-5 items-end'>
-         <span className='text-gray-500 text-xs'>
-            <a className='cursor-pointer' onClick={() => setShowChangelog(true)}>SerpBear v{currentVersion || '0.0.0'}</a>
-            {currentVersion && latestVersionNum && `v${currentVersion}` !== latestVersionNum && (
-               <a className='cursor-pointer text-indigo-700 font-semibold' onClick={() => setShowChangelog(true)}>
-                  {' '}| Update to Version {latestVersionNum} (latest)
-               </a>
-            )}
-         </span>
-         <CSSTransition in={showChangelog} timeout={300} classNames="settings_anim" unmountOnExit mountOnEnter>
-             <ChangeLog closeChangeLog={() => setShowChangelog(false)} />
-         </CSSTransition>
-      </footer>
+    <span className='text-gray-500 text-xs'>
+        <a className='cursor-pointer inline-flex items-center'>
+            <img 
+                src='/favicon.ico' 
+                style={{ 
+                    width: '26px', 
+                    height: '26px',
+                    backgroundColor: 'transparent',
+                    marginRight: '5px' // Adds space between the icon and text
+                }} 
+                alt="Favicon" 
+            />
+            Powered by Zinai Digital
+        </a>
+        <br />
+        <a className='cursor-pointer' onClick={() => setShowChangelog(true)}>
+            SerpBear v{currentVersion || '0.0.0'} 
+        </a>
+        {currentVersion && latestVersionNum && `v${currentVersion}` !== latestVersionNum && (
+            <a className='cursor-pointer text-indigo-700 font-semibold' onClick={() => setShowChangelog(true)}>
+                {' '}| Update to Version {latestVersionNum} (latest)
+            </a>
+        )}
+    </span>
+    <CSSTransition in={showChangelog} timeout={300} classNames="settings_anim" unmountOnExit mountOnEnter>
+        <ChangeLog closeChangeLog={() => setShowChangelog(false)} />
+    </CSSTransition>
+</footer>
    );
 };
 

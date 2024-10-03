@@ -1,11 +1,34 @@
-import { Table, Model, Column, DataType, PrimaryKey } from 'sequelize-typescript';
+/*import { Table, Model, Column, DataType, PrimaryKey} from 'sequelize-typescript';
 
 @Table({
-  timestamps: false,
+  timestamps: true,
+  tableName: 'keyword'
+})*/
+
+import { Table, Model, Column, DataType, PrimaryKey, TableOptions } from 'sequelize-typescript';
+
+@Table(<TableOptions<Model<any, any>>>{
   tableName: 'keyword',
+  timestamps: true,
 })
 
 class Keyword extends Model {
+   static bulkCreate(keywordsToAdd: any): Keyword[] | PromiseLike<Keyword[]> {
+      throw new Error('Method not implemented.');
+   }
+   static findOne(arg0: { where: { ID: number; }; }): Keyword | PromiseLike<Keyword | null> | null {
+      throw new Error('Method not implemented.');
+   }
+   static destroy(arg0: { where: { domain: string | string[] | undefined; }; }): number | PromiseLike<number> {
+      throw new Error('Method not implemented.');
+   }
+   static update(arg0: { volume: number; }, arg1: { where: { ID: number; }; }) {
+      throw new Error('Method not implemented.');
+   }
+   static findAll(arg0: { where: { domain: string; }; }): Keyword[] | PromiseLike<Keyword[]> {
+      throw new Error('Method not implemented.');
+   }
+   [x: string]: any;
    @PrimaryKey
    @Column({ type: DataType.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true })
    ID!: number;

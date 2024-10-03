@@ -4,6 +4,7 @@ import Keyword from '../../database/models/keyword';
 import { getAppSettings } from './settings';
 import verifyUser from '../../utils/verifyUser';
 import refreshAndUpdateKeywords from '../../utils/refresh';
+import { Op } from 'sequelize';
 
 type CRONRefreshRes = {
    started: boolean
@@ -28,8 +29,16 @@ const cronRefreshkeywords = async (req: NextApiRequest, res: NextApiResponse<CRO
       if (!settings || (settings && settings.scraper_type === 'never')) {
          return res.status(400).json({ started: false, error: 'Scraper has not been set up yet.' });
       }
-      await Keyword.update({ updating: true }, { where: {} });
-      const keywordQueries: Keyword[] = await Keyword.findAll();
+      //await Keyword.update({ updating: true }, { where: {} });
+      await Keyword.update({ volume: 0 }, { where: {
+         ID: 0
+      } });
+      //const keywordQueries: Keyword[] = await Keyword.findAll();
+      const keywordQueries: Keyword[] = await Keyword.findAll({
+         where: {
+           domain: 'example.com', // Adjust this based on your actual filter criteria
+         },
+       });
 
       refreshAndUpdateKeywords(keywordQueries, settings);
 

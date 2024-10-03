@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>SerpBear</title>
+        <title>ZINAI DIGITAL</title>
         <meta name="description" content="SerpBear Google Keyword Position Tracking App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

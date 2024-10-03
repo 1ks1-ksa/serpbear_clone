@@ -49,7 +49,7 @@ const getDomainSearchConsoleInsight = async (req: NextApiRequest, res: NextApiRe
    try {
       const query = { domain: domainname };
       const foundDomain:Domain| null = await Domain.findOne({ where: query });
-      const domainObj: DomainType = foundDomain && foundDomain.get({ plain: true });
+      const domainObj: DomainType = foundDomain!.get({ plain: true });
       const scDomainAPI = await getSearchConsoleApiInfo(domainObj);
       if (!(scDomainAPI.client_email && scDomainAPI.private_key)) {
          return res.status(200).json({ data: null, error: 'Google Search Console is not Integrated.' });

@@ -26,7 +26,8 @@ const getDomain = async (req: NextApiRequest, res: NextApiResponse<DomainGetResp
    try {
       const query = { domain: req.query.domain as string };
       const foundDomain:Domain| null = await Domain.findOne({ where: query });
-      const parsedDomain = foundDomain?.get({ plain: true }) || false;
+      //const parsedDomain = foundDomain?.get({ plain: true })  || false;
+      const parsedDomain = foundDomain || false;
 
       if (parsedDomain && parsedDomain.search_console) {
          try {
@@ -40,7 +41,8 @@ const getDomain = async (req: NextApiRequest, res: NextApiResponse<DomainGetResp
          }
       }
 
-      return res.status(200).json({ domain: parsedDomain });
+      //return res.status(200).json({ domain: parsedDomain });
+      return res.status(200).json({ domain: parsedDomain as DomainType | null | undefined });
    } catch (error) {
       console.log('[ERROR] Getting Domain: ', error);
       return res.status(400).json({ error: 'Error Loading Domain' });
